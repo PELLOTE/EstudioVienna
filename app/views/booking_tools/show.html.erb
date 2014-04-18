@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Booking:</b>
+  <%= @booking_tool.booking_id %>
+</p>
+
+<p>
+  <b>Tool:</b>
+  <%= @booking_tool.tool_id %>
+</p>
+
+
+<%= link_to 'Edit', edit_booking_tool_path(@booking_tool) %> |
+<%= link_to 'Back', booking_tools_path %>

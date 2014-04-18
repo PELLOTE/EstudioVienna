@@ -1,0 +1,13 @@
+<%= form_for(@style_group) do |f| %>
+  <div class="field">
+    <%= f.label :group_id %><br />
+    <%= f.number_field :group_id %>
+  </div>
+  <div class="field">
+    <%= f.label :music_style_id %><br />
+    <%= f.number_field :music_style_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

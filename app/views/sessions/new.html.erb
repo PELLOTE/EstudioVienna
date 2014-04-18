@@ -1,0 +1,20 @@
+<%= form_tag sessions_path do %>
+  <div class="field">
+  Iniciar sesión
+  </div>
+</br>
+  <div class="field">
+    <%= label_tag :"Correo electronico" %>
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+  <div class="field">
+    <%= label_tag :"Contraseña" %>
+    <%= password_field_tag :password %>
+  </div>
+  <div class="field">
+    <%= check_box_tag :"No cerrar sesión", 1, params[:remember_me], :checked => true %>
+    <%= label_tag :"No cerrar sésión" %><h5><%= link_to "¿Has olvidado tu contraseña?", solicitudRecuperacionContrasena_path %></h5>
+  </div>
+
+  <div class="actions"><%= submit_tag "Iniciar sesión",:class => 'btn btn-primary' %></div>
+<% end %>

@@ -1,0 +1,27 @@
+<div class="page-header">
+  <center><h2>Listado de estilos musicales</h2></center>
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nombres </th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+
+<% @music_styles.each do |music_style| %>
+  <tr>
+    <td><%= music_style.name %></td>
+    <td><%= link_to ' Ver Detalles', music_style,:class => 'active icon-zoom-in btn btn-mini' %>
+    <%= link_to ' Actualizar', edit_music_style_path(music_style),:class => 'active icon-edit btn btn-mini' %>
+    <%= link_to ' Eliminar', music_style, method: :delete, data: { confirm: "¿Estas seguro que deseas eliminar este estilo musical?" },:class => 'active icon-trash btn btn-mini btn-danger'  %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+<%= link_to ' Agregar Estilo Musical', new_music_style_path,:class => 'active icon-plus-sign btn btn-primary' %>

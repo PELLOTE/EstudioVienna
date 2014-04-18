@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Bienvenido <%= @user.name %> <%= @user.lastname %></h1>
+    <p>para confirmar el registro presione <%= link_to " Aqui", viewactivar_url(@user.id) %></p>
+
+    <p>Gracias por registrarse en www.estudiovienna.cl!</p>
+  </body>
+</html>

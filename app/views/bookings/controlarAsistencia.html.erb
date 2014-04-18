@@ -1,0 +1,129 @@
+<%- model_class = Booking -%>
+<div class="page-header">
+  <h2>Controlador de Asistencias de Hoy</h2>
+ <strong>Fecha de hoy: </strong><%= @fecha_actual.day %>/<%= @fecha_actual.month %>/<%= @fecha_actual.year %>
+</div>
+
+
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li><a href="#sala1" data-toggle="tab">Sala n°1</a></li>
+    <li><a href="#sala2" data-toggle="tab">Sala n°2</a></li>
+  </ul>
+</div>
+
+<div class="tab-content">
+  <div class="active tab-pane " id="sala1">
+
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>  </th>
+          <th><%= model_class.human_attribute_name(:"fecha de reserva") %></th>
+          <th><%= model_class.human_attribute_name(:"Horas solicitadas") %></th>
+          <th><%= model_class.human_attribute_name(:"Sala n°") %></th>
+          <th><%= model_class.human_attribute_name(:"fecha envio solicitud") %></th>
+          <% if current_user %>
+            <% if current_user.user_type_id == 1 %>
+              <th><%= model_class.human_attribute_name(:"Nombre Usuario") %></th>
+            <% end %>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <% @reservas_sala1.each do |booking| %>
+          <% if booking.estate == "Confirmado" or booking.estate == "Asistido" or booking.estate == "NoAsistido" %>    
+            
+            <% @book = Booking.includes(:horas).find(booking.id) %>    
+            <tr>
+              <td><%= link_to booking.id, booking_path(booking) %></td>
+              <td><%= booking.fecha.day %>/<%= booking.fecha.month %>/<%= booking.fecha.year %> </td>
+              <td>
+                <% @book.horas.each do |hora| %>
+                  <%= hora.startTime %> a <%= hora.endTime %></br>
+                <%end%>
+              </td>
+              <td><%= booking.room_id %></td>
+              <td><%= booking.created_at.strftime("%d /%m / %Y") %></td>
+              <% if current_user %>
+                <% if current_user.user_type_id == 1 %>
+                  <td><%= booking.user.name.capitalize   %> <%= booking.user.lastname.capitalize %></td>
+                <% end %>
+              <% end %>
+              <td>
+                  <% if booking.estate == "Confirmado"%>
+                    <%= link_to "¿Presente?", AsistenciaPresente_path(booking.id), data: { confirm: "¿Estas seguro que esta presente?" }, :class => 'btn btn-mini btn-success'  %>
+                    <%= link_to "¿Ausente?", AsistenciaAusente_path(booking.id), data: { confirm: "¿Estas seguro que esta ausente?" }, :class => 'btn btn-mini btn-danger'  %>
+                  <% elsif booking.estate == "Asistido" %>
+                    <span class="label label-success">Asistido</span>
+                    <% if booking.estate != "Finalizado"%>
+                      <%= link_to "Finalizar reserva", FinalizarReserva_path(booking.id), data: { confirm: "¿Estas seguro que desea finalizar la reserva?" }, :class => 'btn btn-mini btn'  %>
+                    <% else %>
+                      <span class="label label-success">Finalizado</span>
+                    <% end %>
+                  <% elsif booking.estate == "NoAsistido" %>
+                    <span class="label label-important">No Asistido</span>
+                  <% end %>
+              </td>
+            </tr>
+          <% end %> <!-- fin if estate == cancelado -->  
+        <% end %>
+      </tbody>
+    </table>
+  </div>  
+
+  <div class="tab-pane " id="sala2">
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>  </th>
+            <th><%= model_class.human_attribute_name(:"fecha de reserva") %></th>
+            <th><%= model_class.human_attribute_name(:"Horas solicitadas") %></th>
+            <th><%= model_class.human_attribute_name(:"Sala n°") %></th>
+            <th><%= model_class.human_attribute_name(:"fecha envio solicitud") %></th>
+            <% if current_user %>
+              <% if current_user.user_type_id == 1 %>
+                <th><%= model_class.human_attribute_name(:"Nombre Usuario") %></th>
+              <% end %>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody>
+          <% @reservas_sala2.each do |booking| %>
+            <% if booking.estate == "Confirmado" or booking.estate == "Asistido" or booking.estate == "NoAsistido" %>
+            
+            <% @book = Booking.includes(:horas).find(booking.id) %>    
+            <tr>
+              <td><%= link_to booking.id, booking_path(booking) %></td>
+              <td><%= booking.fecha.day %>/<%= booking.fecha.month %>/<%= booking.fecha.year %> </td>
+              <td>
+                <% @book.horas.each do |hora| %>
+                  <%= hora.startTime %> a <%= hora.endTime %></br>
+                <%end%>
+              </td>
+              <td><%= booking.room_id %></td>
+              <td><%= booking.created_at.strftime("%d /%m / %Y") %></td>
+              <% if current_user %>
+                <% if current_user.user_type_id == 1 %>
+                  <td><%= booking.user.name.capitalize   %> <%= booking.user.lastname.capitalize %></td>
+                <% end %>
+              <% end %>
+              <td>
+                <% if booking.estate == "Confirmado"%>
+                  <%= link_to "¿Presente?", AsistenciaPresente_path(booking.id), data: { confirm: "¿Estas seguro que esta presente?" }, :class => 'btn btn-mini btn-success'  %>
+                  <%= link_to "¿Ausente?", AsistenciaAusente_path(booking.id), data: { confirm: "¿Estas seguro que esta ausente?" }, :class => 'btn btn-mini btn-danger'  %>
+                <% elsif booking.estate == "Asistido" %>
+                  <span class="label label-success">Asistido</span>
+                  <%= link_to "Finalizar reserva", FinalizarReserva_path(booking.id), data: { confirm: "¿Estas seguro que desea finalizar la reserva?" }, :class => 'btn btn-mini btn'  %>
+                <% elsif booking.estate == "NoAsistido" %>
+                  <span class="label label-important">No Asistido</span>
+                <% end %>
+            </td>
+            </tr>
+           <% end %> <!-- fin if estate == finalizado -->  
+          <% end %>
+        </tbody>
+      </table>      
+  </div>
+
+</div>

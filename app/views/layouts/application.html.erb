@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<% current_user %>
+<html>
+<!-- Version estable v13-->
+<head>
+  <title>Estudio Vienna</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= javascript_include_tag "application", "rails.validations" %>
+  <%= csrf_meta_tags %>
+  <%= yield :head %>
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<div class="navbar navbar-fluid-bottom navbar-inverse ">
+<div class="navbar-inner" id="fondobaner">  
+  <div class="container-fluid">
+    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </a>
+    <a class="brand" href="/">
+      <%= image_tag "http://res.cloudinary.com/estudiovienna/image/upload/v1372181538/estudiovienna_f35nks.png"%>
+    </a>
+    <div class="container-fluid nav-collapse" >
+          <!-- termino de ul de arriba-->
+           
+      <ul class="nav pull-right" >
+        <% if current_user %>
+        <li class = "dropdown" id ="menu9" >
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#menu9" style="width:190px;color:#FFFFFF;font-size:15px;text-align:right">
+          Bienvenido <%= current_user.name.capitalize %>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Editar perfil", edit_user_path(current_user.id)%></li>
+            <li><%= link_to "Cambiar contraseña", edit_contrasena_path(current_user.id) %></li>
+            <li><%= link_to "Salir", logout_path %></li>
+          </ul>
+        </li>
+        <% end %>
+        <a href="https://www.facebook.com/vienna.concepcion">
+          <%= image_tag "http://res.cloudinary.com/dxrmxoagx/image/upload/v1373396764/Facebook_cnmvk8.png", :size => "52x51", :alt => "facebook/vienna.concepcion"%>
+        </a>
+        &nbsp;
+        <a href="https://soundcloud.com/estudiovienna">
+          <%= image_tag "http://res.cloudinary.com/dxrmxoagx/image/upload/v1373396776/soundcloud_wacnf0.png", :size => "52x51"%>
+        </a>
+        &nbsp;
+        <a href="https://www.audioconce.cl">
+          <%= image_tag "http://res.cloudinary.com/dxrmxoagx/image/upload/v1373396781/Audioconce_kglsll.png" , :size => "52x51"%>
+        </a>
+        &nbsp;
+        <a href="http://itazion.estudiovienna.cl">
+          <%= image_tag "http://res.cloudinary.com/dxrmxoagx/image/upload/v1373396791/itazion_pgvkiv.png", :size => "80x79" %>
+        </a>
+      </ul> 
+      </br></br></br>
+      <% unless current_user %>
+        &nbsp;&nbsp;&nbsp;
+        <%= link_to "Iniciar session", login_path, :class => "btn btn-warning", :style =>'color:black;text-align:right' %>
+        <%= link_to "Registrarse", signup_path, :class => "btn" %>
+      <% end %>      
+      </br></br>
+      <ul class="nav">          
+        <li><%= link_to "Contacto", welcome_contact_path, {:style=>'color:#FFFFFF;font-size:23px;text-align:right'}  %></li>
+        <li><%= link_to "Acerca de nosotros", welcome_aboutus_path, {:style=>'color:#FFFFFF;font-size:23px'}   %></li>
+        <% if current_user %>
+        <!-- Reservas-->
+        <li class="dropdown" id="menu1">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1" style="width:120px;color:#FFFFFF;font-size:23px">
+                Reservas
+                <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Haz tu solicitud de Reserva", bookings_path%></li>
+            <li><%= link_to "Solicitudes de Reserva", listarSolicitudes_path%></li>
+            <% if current_user.user_type_id == 1%>              
+              <li class="divider"></li>              
+              <li><%= link_to "Mantenedor de Reservas", listarReservas_path%></li>
+              <li class="divider"></li>              
+              <li><%= link_to "Controlar Asistencia de Hoy", controlarAsistencia_path%></li>
+            <% else %>
+              <li class="divider"></li>              
+              <li><%= link_to "Reservas Realizadas", listarReservas_path%></li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+      <!-- Grupos musicales-->
+      <% if current_user %>  
+
+        <li class="dropdown" id="menu2">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#menu2" style="width:250px;color:#FFFFFF;font-size:23px" >
+              Grupos Musicales 
+              <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <li><%= link_to "Crear Grupo Musical", new_group_path%></li>
+            <li class="divider"></li>
+            <li><%= link_to "Ver Grupos Musicales", groups_path%></li>
+            <li class="divider"></li>
+            <li><%= link_to "Ver mis Grupos Musicales", misgrupos_path(current_user.id)%></li>
+          </ul>
+        </li>
+        <% else %>
+          <li><%= link_to "Grupos Musicales", groups_path, {:style=>'color:#FFFFFF;font-size:23px'} %></li>
+        <% end %>
+      </ul>  
+    </div><!--/.nav-collapse -->
+
+  </div>
+
+</div>
+</div>
+</br>
+<% flash.each do |name, msg| %>
+  <div class="alert alert-<%= name == :notice ? "success" : "error" %>">
+    <a class="close" data-dismiss="alert">×</a>
+    <%= msg %>
+  </div>
+<% end %>
+
+<% if current_user %>
+<% if current_user.user_type_id == 1%>
+<div class="row">   
+  <div >
+    <!--Menu de Administracion -->
+    <div class="navbar navbar-fluid-top center" >
+    <div class="navbar-inner" id="dentro" >  
+      <div class="container-fluid">
+        <div class="container-fluid nav-collapse">
+          <ul class="nav">  
+
+            <!-- Herramientas-->
+            <li class="dropdown" id="menu6">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu6" style="width:100px">
+                  Herramientas
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Crear herramienta", new_tool_path%></li>
+                <li class="divider"></li>
+                <li><%= link_to "Ver herramienta", tools_path%></li>
+              </ul>
+            </li>
+            
+            <!-- horas -->      
+            <li class="dropdown" id="menu5">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu5" style="width:130px">
+                  Horas de Ensayo
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Crear hora", new_hora_path%></li>
+                <li class="divider"></li>
+                <li><%= link_to "Ver horas", horas_path%></li>
+              </ul>
+            </li>
+
+            <!-- Estilos musicales-->        
+            <li class="dropdown" id="menu3">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu3" style="width:130px">
+                  Estilos Musicales
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Crear Estilo Musical", new_music_style_path%></li>
+                <li class="divider"></li>
+                <li><%= link_to "Ver Estilos Musicales", music_styles_path%></li>
+              </ul>
+            </li>
+
+             <!-- Salas de ensayo-->  
+            <li class="dropdown" id="menu4">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu4" style="width:120px">
+                  Salas de Ensayo
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Crear Sala de Ensayo", new_room_path%></li>
+                <li class="divider"></li>
+                <li><%= link_to "Ver salas de ensayo", rooms_path%></li>
+              </ul>
+            </li>
+
+            <!-- tipo de usuario -->      
+            <li class="dropdown" id="menu7">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu7" style="width:125px">
+                  Roles de Usuario
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Crear rol de usuario", new_user_type_path%></li>
+                <li class="divider"></li>
+                <li><%= link_to "Ver roles de usuario", user_types_path%></li>                
+              </ul>
+            </li>
+
+              <!--  usuarios -->
+            <li class="dropdown" id="menu8">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#menu8" style="width:70px">
+                 Usuarios
+                  <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to "Ver usuarios", users_path%></li>                
+                <li><%= link_to "Enviar e-mail a usuario", enviarmail_path%></li>
+               </ul>
+            </li> 
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+</div><!--/span11 --> 
+</div>
+<% end %>
+<% else %>
+</br></br>
+<% end %>
+
+  <div class="row" id="principal">
+    <div class="span2">
+    </div> 
+    <div  id = "s10" >
+      <div class="hero-unit" id="hu">      
+        <%= yield %>
+        <%= yield :scripts %>
+      </div>
+
+      <div class="row-fluid">
+        <div >
+          <footer>
+            <div class="well sidebar-nav" id="footerDentro">
+              <ul class="nav nav-list">
+                <div class="span7">
+                </br></br></br>
+                  <center><p><strong>Estudio Vienna</strong> un lugar para el arte</p></center>
+                </div>
+                <div class="span5">
+                  <address>
+                    <center><p><strong>Contactanos</strong></p></center>
+                    <strong>Correo Electronico:</strong> <%= link_to "info@estudiovienna.com", welcome_contact_path %></br>
+                    <strong>Contacto:</strong> +56 (41) 221 2753.</br>
+                              +56 (9) 7602 9740.
+                  </address>
+                  <%= link_to "http://www.facebook.com/vienna.concepcion" do %>
+                    <%= image_tag( "/facebook.png", :size => "1200X480", "alt" => "chuasmcal" )%>
+                  <% end %>
+                </div>                 
+                 <hr width=75% color="#000000">
+                 <center>
+                  <p>Copyright © 2013 Estudio Vienna. Desarrollado por <%= link_to "RABO IT", "http://www.raboit.com" %>.</p>
+                 </center> 
+              </ul>
+            </div><!--/.well -->
+          </footer>
+        </div>
+      </div>
+    </div> 
+  </div><!--/.row -->
+
+</body>
+</html>

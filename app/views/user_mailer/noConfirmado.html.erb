@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hola! <%= @user.name %> <%= @user.lastname %></h1>
+    <p> Debido a que a pasado en tiempo limite de confirmacion su reserva en Estudio Vienna. Reserva: Sala N°<%= @booking.room_id %>, para el día   <%= @booking.fecha.day %>/<%= @booking.fecha.month %>/<%= @booking.fecha.year %>.</p>
+     <ul>
+
+          <% hora = Booking.includes(:horas).find(@booking.id)%>
+            <%hora.horas.each do |horas|%>
+                <li><%= horas.name %> horas</li>
+            <%end%> 
+     </ul> 
+     <p class="text-warning">Su solicitud ha sido eliminada y la hora queda disponible </p>
+
+    <p>Gracias por preferir Estudio Vienna!</p>
+  </body>
+</html>

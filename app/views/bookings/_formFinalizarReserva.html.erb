@@ -1,0 +1,99 @@
+<%- model_class = Booking -%>
+<div class="row">
+  <div class="span12">
+    <div class="row">
+      <div class="span5">
+        <dl class="dl-horizontal">
+          <h5><dt><strong><%= model_class.human_attribute_name(:"fecha de reserva") %> :</strong></dt></h5>
+          <h4><dd><%= @booking.fecha %></dd></h4>
+          <h5><dt><strong><%= model_class.human_attribute_name(:"sala N°") %> :</strong></dt></h5>
+          <h4><dd><%= @booking.room_id %></dd></h4>
+
+          <h5><dt><strong><%= model_class.human_attribute_name(:"hora(s) utilizada(s)") %> :</strong></dt></h5>
+          <h4><dd>
+            <% @booking.horas.each do |hora| %>
+              <p>de <%=hora.startTime %> a <%=hora.endTime %></p>
+              <% @cantidad_horas = @cantidad_horas + 1 %>
+            <%end%>
+          </dd></h4>
+        </dl>
+
+          <center>Deudas</center></br>
+          <strong><% @deuda_salas = @cantidad_horas * @booking.room.price %></strong>
+          Cantidad de horas solicitadas : <%= @cantidad_horas %></br>
+          Precio hora sala : <%= @booking.room.price %></br>
+          ---------------------------------- </br>
+          <p class="text-warning">Total arriendo salas : <%= @deuda_salas %></p>
+          <% if @equipos.tools.count != 0 %>
+          </br></br>
+
+          Cantidad Equipos Solicitados : <%= @equipos.tools.count %></br>
+          ------------------------------------------</br>
+          <p class="text-warning"> Total equipos: <%= @precio_instrumentos %></p>
+          </br>
+            <% if @booking.amount == 0 %>
+              <p class="text-error"> Total Deuda : <%= @precio_instrumentos + @deuda_salas  %> </p>
+            <%end%>
+          <%end%>
+
+          <% if @booking.amount != 0 %>
+          </br>
+          Reserva confirmada</br>
+          ------------------------------------------</br>
+          <p class="text-success"> Confirmado con : <%= @booking.amount %></p>
+          </br>
+          <p class="text-error"> Total Deuda a pagar: <%= @precio_instrumentos + @deuda_salas - @booking.amount %> </p>
+          <%end%>
+
+          <%= form_tag  :action =>'guardarFinalizarReserva' do %>
+          	<div class="form-actions">
+    			<%= submit_tag "Finalizar Reserva", :class =>"btn btn-primary" %>
+    			<%= link_to t('.Cancelar', :default => t("helpers.links.cancel")),
+                controlarAsistencia_path, :class => 'btn' %>
+                <%= hidden_field_tag :id, @booking.id  %>
+  			</div>
+          <%end%>
+      </div> <!-- span4 -->
+      <div class="span5">
+          <center><h3><p class='text-info'></p> Personas que asistieron</h3></br></center>
+
+          <table>
+          <% if @assistant.count != 0 %> 
+          <tr>
+            <td>nombre</td>
+            <td>instrumento</td>
+          </tr>
+          <%else%>
+            <center><h5>no se registraron asistentes</h5></center>
+          <%end%>
+         
+          <% @assistant.each do |a| %>
+          <tr>
+            <td><%= link_to a.name,booking_assistant_path(@booking,a.id)  %></td>
+            <td><%= a.instrument %></td>
+          </tr>
+          <% end %>
+        </table></br>
+
+        </br></br></br>
+
+
+         <center><h3><p class='text-info'></p>  Equipos y/o accesorios para tu ensayo</h3></br></center>
+
+
+
+        <% if @equipos.tools.count == 0 %>
+           <center><h5>no se asignaron equipos y/o accesorios musicales para esta reserva</h5></center>
+        <%else%>
+          Cantidad de equipos solicitados: </br>
+          <% @equipos.tools.each do |tool| %>
+            <%= tool.name %>
+            <%= tool.price_unitary %>
+            </br>                     
+            
+          <%end%>
+        <%end%>
+      </div> <!-- span6 -->
+    </div> <!-- row -->
+  </div> <!-- span12 -->
+</div>  <!-- row -->

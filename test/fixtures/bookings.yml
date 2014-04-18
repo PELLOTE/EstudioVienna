@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  startTime: 1
+  endTime: 1
+  fecha: 2013-03-20
+  amount: 1
+  estate: MyString
+  room_id: 1
+
+two:
+  startTime: 1
+  endTime: 1
+  fecha: 2013-03-20
+  amount: 1
+  estate: MyString
+  room_id: 1

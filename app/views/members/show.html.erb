@@ -1,0 +1,25 @@
+<div class="page-header">
+  <center><h2>Integrante de <%= @member.group.name %> </h2></center>
+</div> 
+<p>
+  <b>Nombre:</b>
+  <%= @member.name %>
+</p>
+
+<p>
+  <b>Apellido Paterno:</b>
+  <%= @member.lastname %>
+</p>
+
+<p>
+  <b>Apellido Materno:</b>
+  <%= @member.surname %>
+</p>
+
+<p>
+  <b>Instrumento:</b>
+  <%= @member.instrument %>
+</p>
+</br>
+<%= link_to ' Actualizar', edit_group_member_path(@group,@member),:class => 'active icon-edit btn btn-primary ' %>
+<%= link_to ' Atras', group_path(@group),:class => 'active icon-arrow-left btn '%>

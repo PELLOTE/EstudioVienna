@@ -1,0 +1,168 @@
+<%- model_class = Booking -%>
+<div class="row">
+  <div class="span12">
+    <div class="row">
+      <div class="span3">
+      </div>
+      <div class="span4">
+        <dl class="dl-horizontal">
+          <h5><dt><strong><%= model_class.human_attribute_name(:"fecha de reserva") %> :</strong></dt></h5>
+          <h4><dd><%= @booking.fecha.day %>/<%= @booking.fecha.month %>/<%= @booking.fecha.year %></dd></h4>
+          <h5><dt><strong><%= model_class.human_attribute_name(:"sala N°") %> :</strong></dt></h5>
+          <h4><dd><%= @booking.room_id %></dd></h4>
+          <h5><dt><strong><%= model_class.human_attribute_name(:"horas solicitadas") %> :</strong></dt></h5>
+          <h4><dd>
+            <% @booking.horas.each do |hora| %>
+              <p>de <%=hora.startTime %> a <%=hora.endTime %></p>
+              <% @cantidad_horas = @cantidad_horas + 1 %>
+            <%end%>
+          </dd></h4>
+        </dl>
+        <hr width=75% color="#000000">
+
+        <!-- LOGICA PARA RETORNAR DEPENDIENDO DEL ESTADO QUE SE ENCUENTRE LA RESERVA-->
+        <% if @booking.estate == "Solicitado" or @booking.estate == "Cancelado" or @booking.estate == "NoConfirmado" %>
+          <%= link_to t('.back', :default => t(" atras")), listarSolicitudes_path, :class => 'icon-arrow-left btn'  %>
+        <% elsif @booking.estate == "Confirmado" or @booking.estate == "Cancelado_Confirmado" or @booking.estate == "Finalizado" or @booking.estate == "Confirmado_NoFinalizado" or @booking.estate == "NoAsistido" %>
+          <%= link_to t('.back', :default => t(" atras")), listarReservas_path, :class => 'icon-arrow-left btn'  %>
+        <%end%> 
+
+        <% if @booking.estate == "Solicitado"%>
+          <%= link_to t('.edit', :default => t(" actualizar")), edit_booking_path(@booking), :class => 'icon-edit btn' %>
+        <%end%> 
+
+        <% if @booking.estate == "Solicitado" or @booking.estate == "Confirmado"%>
+          <%= link_to ' Cancelar', booking_path(@booking), method: :delete, data: { confirm: "¿Estas seguro que deseas cancelar la solicitud para el #{@booking.created_at.strftime('%d/%B/%Y')}?" }, :class => 'icon-trash btn btn-danger'%>
+        <%end%> 
+        </br></br>
+      </div>
+      <div class="span4">
+      </div>
+    </div>
+  </div>
+
+  <div class="span12">
+    <div class="row">
+    </br>
+      <% if @equipos.tools.count != 0 %>
+        <div class="alert alert-success span9">
+          *Si quieres puede ingresar mas asistentes y solicitar mas equipos y/o accesorios para tu ensayo.
+        </div>
+      <%else%>
+        <div class="alert alert-error span19">
+          *Tienes que terminar los pasos que faltan para completar tu reserva.
+        </div>
+      <%end%>
+    </div>
+  </div>
+  
+  <div class="span12">
+    <div class="row">
+      <div class="span8" align="center">
+        <% if @equipos.tools.count != 0 %>
+          <center><h3><p class='icon-ok text-info'></p>  Equipos y/o accesorios para tu ensayo</h3></br></center>
+        <%else%>
+          <center><h3>Termina Paso 3/3: Equipos y/o accesorios para tu ensayo</h3></br></center>          
+        <%end%>
+        
+        <% if @equipos.tools.count == 0 %>
+           <center><h5>si deseas solicitar un equipo y/o accesorio musical ingresar en solicitar equipos </h5></center>
+        <%else%>
+          <strong>Equipos Solicitados:</strong></br>
+          <% @equipos.tools.each do |tool| %>
+            <%= tool.name %>
+            <%= tool.trademark %>
+            <%= tool.price_unitary %>
+            </br>
+          <%end%>
+        <%end%>
+        </br>
+          <% if @booking.estate != "Finalizado" %>
+            <%= link_to t('.tool', :default => t(" Solicitar o Cancelar Equipo ")), AsignarTool_path(@booking.id),      
+            :class => 'icon-plus-sign btn' %>
+          <%end%>
+      </div> <!-- span12 -->
+    </div> <!-- row -->
+  </div> <!-- span12 -->
+
+  <div class="span7">
+    <div class="row">
+        <hr width=75% color="#000000">
+         <center><strong>Deudas</strong></center></br>
+         <% @deuda_salas = @cantidad_horas * @booking.room.price %>
+         
+         <table class="table table-striped" border= "0">
+          <tr>
+            <td>Cantidad de horas solicitadas </td>
+            <td></td>
+            <td><center><strong><%= @cantidad_horas %></strong></center></td>
+          </tr>  
+          <tr>
+            <td>Precio hora sala</td>
+            <td></td>
+            <td><center><strong>$<%= @booking.room.price %></strong></center></td>
+          </tr>
+          <tr>
+            <td></br></td>
+            <td> <p class="text-warning">Total arriendo salas</p></td>
+            <td><center><strong><p class="text-warning">$<%= @deuda_salas %></p></strong></center></td>
+          </tr>   
+          <% if @equipos.tools.count != 0 %>
+          <tr>
+            <td>Cantidad Equipos Solicitados</td>
+            <td></td>
+            <td><center><strong><%= @equipos.tools.count %></strong></center></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><p class="text-warning">Total equipos </p></td>
+            <td><center><strong><p class="text-warning">$<%= @precio_instrumentos %> </p></strong></center></td>
+            </tr>
+            <% if @booking.amount == 0 %>
+              <tr>
+                <td></td>
+                <td><p class="text-error">Total Deuda </p></td>
+                <td><center><strong><p class="text-error">$<%= @precio_instrumentos + @deuda_salas %> </p></strong></center></td>
+              </tr>
+            <%end%>          
+          <%end%>
+
+          <% if @booking.amount != 0 %>
+          <tr>
+            <td>Reserva Confirmada</td>
+            <td></td>
+            <td><center><strong>Si</strong></center></td>
+          </tr>
+           <tr>
+            <td></br></td>
+            <td> <p class="text-success">Confirmado con</p></td>
+            <td><center><strong><p class="text-success">$<%= @booking.amount %></p></strong></center></td>
+          </tr>
+          <tr>
+            <td></br></td>
+            <td> <p class="text-error"> Total Deuda</p></td>
+            <td><center><strong><p class="text-error">$<%= @precio_instrumentos + @deuda_salas - @booking.amount %></p></strong></center></td>
+          </tr>  
+         <%end%>
+         </table>
+      </div>
+  </div>
+  <div class="span12">
+    <div class="row">
+    </br>
+      <% if @booking.amount == 0 %>
+        <div class="alert alert-error span9">
+          *Solo te falta confirmar tu reserva, para eso tienes que abonar la mitad del valor de reserva y contactarte con nosotros.
+        </div>
+      <%else%>
+        <div class="alert alert-success span5">
+          *Reserva Confirmada.
+        </div>
+      <%end%> 
+    </div>
+  </div>
+
+
+
+
+</div>  <!-- row -->

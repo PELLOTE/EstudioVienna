@@ -1,0 +1,30 @@
+<h1>Listing assistants</h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Lastname</th>
+    <th>Surname</th>
+    <th>Instrument</th>
+    <th>Nickname</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @assistants.each do |assistant| %>
+  <tr>
+    <td><%= assistant.name %></td>
+    <td><%= assistant.lastname %></td>
+    <td><%= assistant.surname %></td>
+    <td><%= assistant.instrument %></td>
+    <td><%= assistant.nickname %></td>
+    <td><%= link_to 'Show' %></td>
+    <td><%= link_to 'Edit' %></td>
+    <td></td>
+  </tr>
+<% end %>
+</table>
+
+
+

@@ -1,0 +1,167 @@
+<%= form_for @booking, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+<div class="row">
+ <div class="span12">
+
+    <div class="row">
+      <div class="span6">
+        <div class="control-group">
+          <%= f.label :fecha, :class => 'control-label' %>
+          <div class="controls">
+            <% if @opcion == "new"%>
+              <%= f.text_field :fecha1, :value =>"#{@day}/#{@month}/#{@year}",:disabled => 'disabled',:class => 'text_field' %>
+              <%= hidden_field_tag :fecha, @fecha  %>
+            <% else%>
+                <%= f.text_field :fecha1, :value =>"#{@day}/#{@month}/#{@year}",:disabled => 'disabled',:class => 'text_field' %>
+              <%= hidden_field_tag :fecha, @fecha  %>
+            <% end%>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :"Horas a arrendar", :class => 'control-label' %>
+         <div class="controls">
+           <%= f.collection_select :hora_ids, Hora.order(:name), :id, :name ,  {}, 
+            {multiple: true} %>
+          <p class="text-info"><%= f.label :"Importante: Escriba la hora de inicio que desea ensayar ej: 11 " %></P>
+         </div>
+        </div>
+
+        <div class="control-group">
+          <%= f.label :"Sala de ensayo N°", :class => 'control-label' %>
+          <div class="controls">
+            <%= f.collection_select :room_id, Room.order(:id), :id, :full_name%>
+          </div>
+        </div>
+        
+        <div class="form-actions">
+          <%= f.button @boton, :class => 'icon-ok-sign btn-primary' %>
+          <% if @opcion == "new" %>
+            <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), bookings_path, :class => 'btn' %>
+          <% elsif @opcion == "update"  %>            
+            <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), booking_path, :class => 'btn' %>
+          <% end %>
+
+          <% if current_user %>
+            <%= hidden_field_tag :userid, current_user.id  %>
+          <% end %>
+        </div>
+      </div>
+  <div class="span6" id="disponible">
+    <div class="tabbable"> <!-- Only required for left/right tabs -->
+      <ul class="nav nav-tabs span3">
+        <li><a href="#sala1" data-toggle="tab">Sala 1</a></li>
+        <li><a href="#sala2" data-toggle="tab">Sala 2</a></li>
+      </ul>
+    </div>
+
+    <div class="tab-content">
+      <div class="active tab-pane " id="sala1">
+        <strong>Sala 1 </strong></br>
+        <% @horacreadas.each do |hora| %>
+          <% @areglo1 = [] %>
+              <% @cont = 0%>
+            
+            <%if @Reservas_dia_1.blank?%>
+              <ul>
+               <li><%= hora.name %>: <span class="label label-success"> Hora Disponible.</span></li>
+              </ul>
+            <%else%>
+              <% @Reservas_dia_1.each do |r| %>
+                <% @ho = Booking.includes(:horas).find(r.id) %>
+                <% @ho.horas.each do |h| %>
+                  <%if hora.name == h.name %>
+                    <% if r.estate == 'Cancelado' or r.estate == 'NoConfirmado' or r.estate == 'Cancelado_Confirmado' or r.estate == 'Finalizado' or r.estate == 'Confirmado_NoFinalizado' or r.estate == 'NoAsistido' or r.estate == 'Asistido' %>
+                        <% @areglo1 << "Disponible" %> 
+                        <%@cont = 1%>
+                    <% elsif r.estate == 'Confirmado' %>
+                      <% @areglo1 << "Ocupada" %> 
+                      <%@cont = 1%>
+                    <% elsif r.estate == 'Solicitado' %>
+                      <% @areglo1 << "Solicitada" %> 
+                      <%@cont = 1%>
+                    <% end %>                        
+                  <% end %>
+                <% end %>
+              <%end%>
+              
+              <% if @cont == 0 %>
+                <% @areglo1 << "Disponible"%>
+              <% end %>
+            <%end%>
+            
+            <% @hora_anterior = "vacio" %>
+            <ul>
+            <% @areglo1.each do |arra|%>
+              
+                <% if arra == 'Disponible' %>            
+                  <li> <%= "#{hora.name}: " %><span class="label label-success">Hora <%= arra %>.</span></li>
+                <% elsif arra == 'Solicitada' %>
+                  <li> <%= "#{hora.name}: " %><span class="label label-warning">Hora <%= arra %>.</span></li>
+                <% elsif arra == 'Ocupada' %>
+                  <li> <%= "#{hora.name}: " %><span class="label label-important">Hora <%= arra %>.</span></li>
+                <% end %>
+              
+              <% @hora_anterior = hora.name %>
+            <% end %>
+            </ul>
+        <%end%>
+      </div>
+      <div class="tab-pane " id="sala2">
+        <strong>Sala 2</strong></br>
+       <% @horacreadas.each do |hora| %>
+        <% @areglo2 = [] %>
+            <% @cont = 0%>
+          <%if @Reservas_dia_2.blank?%>
+            <ul>
+              <li><%= hora.name %>: <span class="label label-success"> Hora Disponible.</span></li>
+            </ul>
+          <%else%>
+          
+            
+            <% @Reservas_dia_2.each do |r| %>
+                <% @ho = Booking.includes(:horas).find(r.id) %>
+                  <% @ho.horas.each do |h| %>
+                      <%if hora.name == h.name %>
+                          <% if r.estate == 'Cancelado' or r.estate == 'NoConfirmado' or r.estate == 'Cancelado_Confirmado'  or r.estate == 'Finalizado' or r.estate == 'Confirmado_NoFinalizado' or r.estate == ' NoAsistido' or r.estate == 'Asistido' %>
+                              <% @areglo2 << "Disponible" %> 
+                              <%@cont = 1%>
+                              <% elsif r.estate == 'Confirmado' %>
+                                <% @areglo2 << "Ocupada" %> 
+                                <%@cont = 1%>
+                              <% elsif r.estate == 'Solicitado' %>
+                                <% @areglo2 << "Solicitada" %> 
+                                <%@cont = 1%>
+                              <% end %>                        
+                      <% end %>
+                  <% end %>
+
+            <%end%>
+            <% if @cont == 0 %>
+              <% @areglo2 << "Disponible"%>
+            <% end %>
+          <%end%>
+
+        <ul>
+        <% @areglo2.each do |arra|%>
+          <% if arra == 'Disponible'%>            
+            <li> <%= "#{hora.name}: " %><span class="label label-success">hora <%= arra %>.</span></li>
+          <% elsif arra == 'Solicitada' %>
+            <li> <%= "#{hora.name}: " %><span class="label label-warning">hora <%= arra %>.</span></li>
+          <% elsif arra == 'Ocupada' %>
+            <li> <%= "#{hora.name}: " %><span class="label label-important">hora <%= arra %>.</span></li>
+          <% end %>
+        <% end %>
+        </ul>
+
+      <%end%>
+      </div>
+    </div>
+
+     
+    </div>
+  </div>
+</div><!-- End span 12 -->
+</div><!-- end row-->
+
+<% end %>
+

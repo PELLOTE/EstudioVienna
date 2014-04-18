@@ -1,0 +1,26 @@
+<%- model_class = Equipment -%>
+<center>
+<div class="page-header">
+  <h1><%=t "Equipamiento"%></h1>
+</div>
+<dl class="dl-horizontal">
+  <dt>Equipo :</strong></dt>
+  <dd><%= @equipment.tool %></dd>
+  <dt>Marca :</strong></dt>
+  <dd><%= @equipment.trademark %></dd>
+  <dt>Cantidad :</strong></dt>
+  <dd><%= @equipment.quantity %></dd>
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("Atras")),
+              room_path(@room), :class => 'icon-arrow-left btn'  %>
+  <%= link_to t('.edit', :default => t("Actualizar")),
+              edit_room_equipment_path(@room, @equipment), :class => 'icon-edit btn' %>
+  <%= link_to t('.destroy', :default => t("Eliminar")),
+              room_equipment_path(@equipment),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "¿Estas seguro que deseas eliminar #{@equipment.tool} #{@equipment.trademark} ?")) },
+              :class => 'icon-trash btn btn-danger' %>
+</div>
+</center>

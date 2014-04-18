@@ -1,0 +1,23 @@
+<%= form_for [@group, @member], :html => { :class => 'form-horizontal' }, :validate => true  do |f| %>
+
+  <div class="field">
+    <%= f.label :nombre %>
+    <%= f.text_field :name %>
+  </div><br />
+  <div class="field">
+    <%= f.label :"Apellido Paterno" %>
+    <%= f.text_field :lastname %>
+  </div><br />
+  <div class="field">
+    <%= f.label :"Apellido Materno" %>
+    <%= f.text_field :surname %>
+  </div><br />
+  <div class="field">
+    <%= f.label :Instrumento %>
+    <%= f.text_field :instrument %>
+  </div><br />
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), group_path(@group) , :class => 'btn' %>
+  </div>
+<% end %>

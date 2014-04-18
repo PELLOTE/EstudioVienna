@@ -1,0 +1,11 @@
+<%= form_for @user_type, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+  <div class="field">
+    <%= f.label :"nombre del rol" %>
+    <%= f.text_field :name %>
+  </div>
+  <br />
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), user_types_path , :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,0 +1,62 @@
+<%= form_for(@character) do |f| %>
+  <% if @character.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@character.errors.count, "error") %> prohibited this character from being saved:</h2>
+
+      <ul>
+      <% @character.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :address %><br />
+    <%= f.text_field :address %>
+  </div>
+  <div class="field">
+    <%= f.label :longitude %><br />
+    <%= f.text_field :longitude %>
+  </div>
+  <div class="field">
+    <%= f.label :latitude %><br />
+    <%= f.text_field :latitude %>
+  </div>
+  <div class="field">
+    <%= f.label :gmaps %><br />
+    <%= f.check_box :gmaps %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+  <%= gmaps("markers" => {"data" => @json, "options" => { "draggable" => true  } } ) %> 
+  <% content_for :scripts do %>
+  <script type="text/javascript" charset="utf-8">
+
+  Gmaps.map.HandleDragend = function(pos) {
+    var geocoder = new google.maps.Geocoder();
+    geocoder.geocode({
+      latLng: pos
+    }, function(responses) {
+      if (responses && responses.length > 0) {
+        alert(responses[0].formatted_address);
+      } else {
+      alert('Cannot determine address at this location.');
+      }
+    });
+  };
+
+  Gmaps.map.callback = function() {
+    for (var i = 0; i <  this.markers.length; ++i) {
+       google.maps.event.addListener(Gmaps.map.markers[i].serviceObject, 'dragend', function() { Gmaps.map.HandleDragend(this.getPosition()) });
+    }
+  };        
+  </script>
+  <% end %>
+<% end %>

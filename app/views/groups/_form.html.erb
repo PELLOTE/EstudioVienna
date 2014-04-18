@@ -1,0 +1,25 @@
+<% current_user %>
+<%= form_for @group, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+  <div class="control-group">
+    <%= f.label :"Nombre del grupo", :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :name, :class => 'text_field' %>
+  </div>
+    <br />
+    <%= f.label :"Estilo musical" , :class => 'control-label'%>
+    <div class="controls">
+      <%= f.collection_select :music_style_ids, MusicStyle.order(:name), :id, :name, {}, 
+    {multiple: true} %>
+    <%= f.label :"Importante: Escriba el estilo musical al cual pertenece" %>
+    </div>
+
+  </div>
+  <% if current_user %>
+    <%= hidden_field_tag :userid, current_user.id  %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+    <%= link_to t('.Cancelar', :default => t("helpers.links.cancelar")),
+                groups_path, :class => 'btn' %>
+  </div>
+<% end %>

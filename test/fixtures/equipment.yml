@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  tool: MyString
+  trademark: MyString
+  quantity: 1
+
+two:
+  tool: MyString
+  trademark: MyString
+  quantity: 1

@@ -1,0 +1,22 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Nombre: </b>
+  <%= @assistant.name %>
+</p>
+
+<p>
+  <b>Apellido:</b>
+  <%= @assistant.lastname %>
+</p>
+<p>
+  <b>Instrumento musical:</b>
+  <%= @assistant.instrument %>
+</p>
+<p>
+  <b>Apodo: </b>
+  <%= @assistant.nickname %>
+</p>
+
+<%= link_to ' atras', booking_path(@booking), :class => ' icon-arrow-left btn'%>
+<%= link_to 'Edit', edit_booking_assistant_path(@booking.id, @assistant), :class => 'icon-edit btn' %> 

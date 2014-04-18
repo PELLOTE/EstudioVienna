@@ -1,0 +1,21 @@
+<%= form_for @article, html: {multipart: true}, :validate => true do |f| %>
+  <br />
+  <div class="field">
+    <%= f.label :"Titulo del articulo" %>
+    <%= f.text_field :title %><br />
+  </div>
+  <div class="field">
+    <%= f.label :"descripcion del articulo" %>
+    <%= f.text_area :body %><br />
+  </div>
+
+  <div class="field">
+    <%= f.label :"Adjunte un imagen" %>
+    <%= f.file_field :photo %><br />
+  </div>
+
+<div class="form-actions">
+  <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), root_path, :class => 'btn' %>
+</div>
+<% end %>

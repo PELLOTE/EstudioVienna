@@ -1,0 +1,22 @@
+<p>
+  <b>Nombre:</b>
+  <%= @tool.name %>
+</p>
+
+<p>
+  <b>Cantidad Disponible:</b>
+  <%= @tool.quantity %>
+</p>
+
+<p>
+  <b>Marca:</b>
+  <%= @tool.trademark %>
+</p>
+<p>
+  <b>Precio Unitario:</b>
+  <%= @tool.price_unitary %>
+</p>
+
+
+<%= link_to ' Actualizar', edit_tool_path(@tool),:class => 'active icon-edit btn btn-primary ' %>
+<%= link_to ' Atras', tools_path,:class => 'active icon-arrow-left btn '%>

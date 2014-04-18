@@ -1,0 +1,26 @@
+<%= form_for [ @booking, @assistant], :validate => true  do |f| %>
+  <div class="field">
+    <%= f.label :Nombre  %>
+    <%= f.text_field :name %>
+  </div><br />
+  <div class="field">
+    <%= f.label :Apellido %>
+    <%= f.text_field :lastname %>
+  </div><br />
+  <div class="field">
+    <%= f.label :apodo %>
+    <%= f.text_field :nickname %>
+  </div><br />
+ <div class="field">
+    <%= f.label :instrumento %>
+    <%= f.text_field :instrument %>
+  </div><br />
+  <div class="actions">
+    <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+    <% if @back == "new" %>
+      <%= link_to ' atras', booking_path(@booking), :class => ' icon-arrow-left btn'%>
+    <% elsif @back == "edit" %>
+      <%= link_to ' atras', booking_assistant_path(@booking.id, @assistant), :class => ' icon-arrow-left btn'%>
+    <% end %>
+  </div>
+<% end %>

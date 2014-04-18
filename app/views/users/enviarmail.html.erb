@@ -1,0 +1,19 @@
+<%= form_tag  :action =>'enviar'  do |f| %>
+
+<div class="field">
+    <%= label_tag :user %>
+    <%= select_tag "user_id[]", options_for_select(@user.collect{ |u| [u.name + " " + u.lastname, u.id] }), {:multiple => :multiple, :size => 10}%>
+    
+</div>
+<div class="field">
+    <%= label_tag :asunto %>
+    <%= text_field_tag :subject %>
+</div>
+  <div class="field">
+    <%= label_tag :mensaje %>
+    <%= text_area_tag :body %>
+</div>
+<div class="form-actions">
+    <%= button_tag "enviar", :class => 'btn-primary' %>
+</div> 
+<%end%> 

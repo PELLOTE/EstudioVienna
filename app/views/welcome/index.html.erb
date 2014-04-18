@@ -1,0 +1,31 @@
+<!-- Galeria de Imagenes -->
+<div id="this-carousel-id" class="carousel slide"><!-- class of slide for animation -->
+  <div class="carousel-inner">
+    <div class="item active">      
+      <%= link_to root_path do %>
+        <%= image_tag( "http://res.cloudinary.com/dxrmxoagx/image/upload/v1371745812/Estudio_de_Grabacion_o5u6qk.jpg", :size => "1200X480", "alt" => "chuasmcal" )%>
+      <% end %>
+      <div class="carousel-caption">
+        <p>Nuestro Estudio</p>
+      </div>
+    </div>
+    <div class="item">
+      <% if current_user %>      
+        <%= link_to bookings_path do %>
+          <%= image_tag( "http://res.cloudinary.com/dxrmxoagx/image/upload/v1371745894/Sala_de_Ensayo_qvwrxy.jpg", :size => "1200X480", "alt" => "chuasmcal" )%>
+        <% end %>
+      <% else %>
+        <%= image_tag( "http://res.cloudinary.com/dxrmxoagx/image/upload/v1371745894/Sala_de_Ensayo_qvwrxy.jpg", :size => "1200X480", "alt" => "chuasmcal" )%>
+      <% end %>      
+      <div class="carousel-caption">
+        <p>Reserva una hora en Estudio Vienna</p>
+      </div>
+    </div>
+  </div><!-- /.carousel-inner -->
+  <!--  Next and Previous controls below
+        href values must reference the id for this carousel -->
+    <a class="carousel-control left" href="#this-carousel-id" data-slide="prev">&lsaquo;</a>
+    <a class="carousel-control right" href="#this-carousel-id" data-slide="next">&rsaquo;</a>
+</div><!-- /.carousel -->
+</br>
+</br>

@@ -1,0 +1,22 @@
+<%= form_for @tool, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+  <div class="field">
+    <%= f.label :Nombre %>
+    <%= f.text_field :name %>
+  </div><br />
+  <div class="field">
+    <%= f.label :Marca%>
+    <%= f.text_field :trademark %>
+  </div><br />
+  <div class="field">
+    <%= f.label :"Cantidad disponible" %>
+    <%= f.number_field :quantity %>
+  </div><br />
+ <div class="field">
+    <%= f.label :"Precio unitario" %>
+    <%= f.number_field :price_unitary %>
+  </div><br />
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), tools_path , :class => 'btn' %>
+  </div>
+<% end %>

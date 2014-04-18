@@ -1,0 +1,68 @@
+<%- model_class = Group -%>
+<% current_user %>
+<div class="page-header">
+  <center><h2> <%=t "#{@group.name}" %> </h2></center>
+</div>
+<div class="row">
+ <div class="span12">
+    <div class="row">
+      <div class="span6">
+        <h4>Representante del Grupo</h4>
+        <p><%= @group.user.name.capitalize %> <%= @group.user.lastname.capitalize %></p>
+
+        <h4>Estilo Musical</h4>
+        
+        <% @group.music_styles.each do |estilo|%>
+          <span class="label label-info">
+            <%= link_to estilo.name, groups_path(:search => estilo.name), {:style=>'color:white;'}  %>
+          </span>
+        <% end %>
+        </br></br>
+        <% if current_user %>
+          <% if  current_user.id == @group.user_id or current_user.user_type_id == 1 %>
+            <% if @valor == 1 %>
+              <%= link_to t('.back', :default => t("helpers.links.Atras")), misgrupos_path(current_user.id), :class => 'icon-arrow-left btn'  %> 
+            <% else %>
+              <%= link_to t('.back', :default => t("helpers.links. Atras")), groups_path, :class => 'icon-arrow-left btn'  %>
+            <% end %>
+              <%= link_to t('.edit', :default => t("helpers.links. Actualizar")), edit_group_path(@group), :class => 'icon-edit btn btn' %>
+              <%= link_to t('.destroy', :default => t("helpers.links. eliminar")), group_path(@group),:method => 'delete',
+                        :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Estas seguro que deseas eliminar el grupo #{@group.name}")) }, :class => 'active icon-trash btn btn-danger' %>
+          <% end %>
+        <% else %>  
+          <%= link_to ' Atras', groups_path,:class => 'active icon-arrow-left btn '%>
+        <% end %>
+    
+      </div>
+      <div class="span6">
+
+
+        <h4>integrantes</h4>
+        <table border='0'>
+          <% if @member.count != 0 %> 
+          <tr>
+            <td>nombre</td>
+            <td>instrumento</td>
+          </tr>
+
+          <%else%>
+            <h5>No hay integrantes asociados a este grupo</h5>
+          <%end%>
+         
+          <% @member.each do |m| %>
+          <tr>
+            <td><%= link_to m.name,group_member_path(@group,m.id)  %></td>
+            <td><%= m.instrument %></td>
+          </tr>
+          <%end%>
+        </table>
+      </br>
+        <% if current_user %>
+          <% if  current_user.id == @group.user_id or current_user.user_type_id == 1 %>
+            <%= link_to t('.integrantes', :default => t("helpers.links. Agregar integrante")), new_group_member_path(@group.id), :class => 'icon-plus-sign btn ' %>
+          <%end%>
+        <%end%>
+      </div>
+    </div>
+ </div>
+</div>

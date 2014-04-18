@@ -1,0 +1,52 @@
+<%- model_class = Group -%>
+<% current_user %>
+<div class="page-header">
+  <center><h2><%=t "Grupos Musicales" %></h2></center>
+</div>
+<%= form_tag groups_path, :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Buscar", :class => 'icon-search btn'  %>
+  </p>
+<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:Nombre) %></th>
+      <th><%= model_class.human_attribute_name(:"Estilo Musical") %></th>
+      <th><%= model_class.human_attribute_name(:creador_del_grupo)%></th>
+    </tr>
+  </thead>
+  <tbody>
+     <% @groups.each do |group| %>
+    <% @gro = Group.includes(:music_styles).find(group.id) %>
+      <tr>
+        <td><%= link_to group.name, group_path(group) %></td>
+        <td>
+            
+            <% @gro.music_styles.each do |estilo| %>
+              <span class="label label-info">
+                <%= link_to estilo.name, groups_path(:search => estilo.name), {:style=>'color:white;'}  %>
+              </span>
+              <% end %>
+            
+        </td>
+
+        <td><%= group.user.name %> <%= group.user.lastname %></td>
+        <% if current_user %>
+          <% if current_user.user_type_id == 1%>
+            <td>
+              <%= link_to t('.edit', :default => t("helpers.links. Actualizar")),
+                          edit_group_path(group), :class => 'active icon-edit btn btn-mini btn btn-mini' %>
+              <%= link_to t('.destroy', :default => t("helpers.links. Eliminar")),
+                          group_path(group),
+                          :method => :delete,
+                          :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "Estas seguro que deseas eliminar el grupo musical: #{group.name}")) },
+                          :class => 'active icon-trash btn btn-mini btn-danger' %>
+            </td>
+          <% end %><!-- fin current_user -->
+        <% end %><!-- fin current_user.user_type_id-->
+      </tr>
+    <% end %>
+  </tbody>
+</table>

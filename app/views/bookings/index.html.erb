@@ -1,0 +1,47 @@
+<%- model_class = Booking -%>
+<% current_user %>
+<div class="page-header">
+  <center><h2>Reserva tu hora de ensayo</h2></center>
+
+  <h2>Paso 1/3 : Seleccionar fecha</h2>
+  <div class="progress progress-striped">
+    <div class="bar" style="width: 25%;"></div>
+  </div>
+</div>
+
+
+<div id="bookings">
+  <h2 id="month">
+  <center><%= link_to "<", date: @date.prev_month %>
+    <%= @date.strftime("%B %Y") %>
+    <%= link_to ">", date: @date.next_month %>
+  </center>
+  </h2>
+  <%= calendar @date do |date| %>
+    <%= date.day %></br>
+    <% if date >= Date.today %>
+    <center><%= link_to "Haz tu reserva", new_booking_path(:day => date.day, :month => date.month, :year => date.year) %></center>
+
+    <% if @bookings_by_date[date] %>
+      <ul>
+        <% @bookings_by_date[date].each do |booking| %>
+          <% if booking.user_id == current_user.id %>
+            <% @book = Booking.find(booking.id)%>
+            <% @book.horas.each do |hora| %>
+              <li>
+                <%= link_to hora.startTime, booking_path(booking)  %> 
+                <%= link_to "a", booking_path(booking) %> 
+                <%= link_to hora.endTime, booking_path(booking) %>.
+              </li>
+            <%end%> 
+          <% end %>  
+        <% end %>
+      </ul>
+    <% end %>
+    <% end %>
+  <% end %>
+</div>
+
+
+
+

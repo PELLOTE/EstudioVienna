@@ -1,0 +1,5 @@
+<div class="page-header">
+  <center><h2>Bienvenido <%= @user.name %> <%= @user.lastname %> <%= @user.surname %></h2></center>
+  <h3>para activar tu cuenta con el correo electronico <%= @user.email %> debes apretar el siguiente link <%= link_to " Activar Cuenta", activarUsuario_path(@user.id, :class => 'btn btn-primary') %><h3> 
+</div> 	
+<br>

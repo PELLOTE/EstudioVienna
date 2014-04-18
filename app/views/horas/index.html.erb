@@ -1,0 +1,30 @@
+<div class="page-header">
+  <center><h2>Listado de Horas para reservar</h2></center>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nombre</th>
+    <th>Hora de inicio</th>
+    <th>Hora de termino</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <thead>
+<% @horas.each do |hora| %>
+  <tr>
+    <td><%= hora.name %></td>
+    <td><%= hora.startTime %></td>
+    <td><%= hora.endTime %></td>
+    <td><%= link_to ' Ver detalles', hora,:class => 'active icon-zoom-in btn btn-mini' %>
+    <%= link_to ' Actualizar', edit_hora_path(hora),:class => 'active icon-edit btn btn-mini' %>
+    <%= link_to ' Eliminar', hora, method: :delete, data: { confirm: "¿Estas seguro que deseas eliminar esta hora?" },:class => 'active icon-trash btn btn-mini btn-danger'  %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to ' Agregar Hora', new_hora_path,:class => 'active icon-plus-sign btn btn-primary' %>

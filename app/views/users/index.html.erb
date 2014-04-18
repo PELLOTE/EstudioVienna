@@ -1,0 +1,75 @@
+<div class="page-header">
+  <center><h2>Listado de usuarios registrados</h2></center>
+</div>
+<div class="tabbable"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li ><a href="#Activo" data-toggle="tab">Usuarios Activos</a></li>
+    <li><a href="#Bloqueado" data-toggle="tab">Usuarios Bloqueados</a></li>    
+  </ul>
+</div>
+<div class="tab-content">
+  <div class="active tab-pane " id="Activo">
+	<table class="table table-striped">
+	  <thead>
+	  <tr>
+	    <th>Nombre  </th>
+	 	<th>E-mail  </th>
+	 	<th>Rol  </th>
+	 	<th>		</th>
+	  </tr>
+	</thead>
+
+	<% @user.each do |user| %>
+	  <% if user.block == true %>
+	  <tr>
+	    <td><%= user.name.capitalize %> <%= user.lastname.capitalize %> </td>
+	    <td><%= user.email %> </td> 
+	    <td><%= user.user_type.name %> </td> 
+	    <td>
+	    	<%= link_to " Ver Usuario", user_path(user),:class => 'active icon-zoom-in btn btn-mini' %>
+	    	
+			<%= link_to " Asignar rol", asignartipo_path(user.id), :class => 'active icon-eye-open btn btn-mini'  %>      
+
+			<%= link_to " Bloquear usuario", bloquearUsuario_path(user.id), data: { confirm: "¿Estas seguro que deseas bloquear el usuario #{user.name} #{user.lastname}?" }, :class => 'active icon-remove btn btn-mini btn-danger'  %>  
+	    </td>
+	  </tr>
+	  <% end %>
+	<% end %>
+	</table>
+   </div>
+
+   <div class="tab-pane " id="Bloqueado">
+	<table class="table table-striped">
+	  <thead>
+	  <tr>
+	    <th>Nombre  </th>
+	 	<th>E-mail  </th>
+	 	<th>Rol  	</th>
+	 	<th>		</th>
+	  </tr>
+	</thead>
+
+	<% @user.each do |user| %>
+	  <% if user.block == false %>
+	  <tr>
+	    <td><%= user.name.capitalize %> <%= user.lastname.capitalize %> </td>
+	    <td><%= user.email %> </td> 
+	    <td><%= user.user_type.name %></td> 
+	    <td>
+	    	<%= link_to t('.edit', :default => t("helpers.links. Ver Usuario")),
+			                  user_path(user), :class => 'active icon-zoom-in btn btn-mini' %>
+
+			<%= link_to " Debloquear usuario", desbloquearUsuario_path(user.id), data: { confirm: "¿Estas seguro que deseas desbloquear el usuario #{user.name} #{user.lastname}?" }, :class => 'icon-ok btn btn-mini'  %>      
+	      	
+    		<%= link_to ' Eliminar', user, method: :delete, data: { confirm: "¿Estas seguro que deseas eliminar el usuario #{user.name} #{user.lastname}?" },:class => 'active icon-trash btn btn-mini btn-danger'  %></td>
+	    </td>
+	  </tr>
+	  <% end %>
+	<% end %>
+	</table>
+   </div>
+</div> 	
+
+
+<br />
+

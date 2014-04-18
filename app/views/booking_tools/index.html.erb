@@ -1,0 +1,25 @@
+<h1>Listing booking_tools</h1>
+
+<table>
+  <tr>
+    <th>Booking</th>
+    <th>Tool</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @booking_tools.each do |booking_tool| %>
+  <tr>
+    <td><%= booking_tool.booking_id %></td>
+    <td><%= booking_tool.tool_id %></td>
+    <td><%= link_to 'Show', booking_tool %></td>
+    <td><%= link_to 'Edit', edit_booking_tool_path(booking_tool) %></td>
+    <td><%= link_to 'Destroy', booking_tool, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Booking tool', new_booking_tool_path %>

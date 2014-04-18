@@ -1,0 +1,17 @@
+<p>
+  <b>Name:</b>
+  <%= @hora.name %>
+</p>
+
+<p>
+  <b>Endtime:</b>
+  <%= @hora.endTime %>
+</p>
+
+<p>
+  <b>Starttime:</b>
+  <%= @hora.startTime %>
+</p>
+
+<%= link_to ' Actualizar', edit_hora_path(@hora),:class => 'active icon-edit btn btn-primary ' %>
+<%= link_to ' Atras', horas_path,:class => 'active icon-arrow-left btn '%>

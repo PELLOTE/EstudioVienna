@@ -1,0 +1,98 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require bootstrap_and_overrides
+ *= require jquery.ui.datepicker
+ *= require chosen
+ *= require_tree .
+ */
+
+  
+.field_with_errors .message {
+			color: #D00;
+			padding-left: 5px;
+			font-size: 12px;
+		}
+
+body {    
+    background-image: url("/fondo1.jpg");
+    width:100%;
+    height:100px;
+    margin: 0;
+	padding: 0;
+}
+#fondobaner {
+	 background-image: url("/fondo1.jpg");
+	 width:auto;
+    height: auto;	
+  	 border: 0px;
+	margin-right: auto;
+	margin-left: auto;
+	
+}
+#s10{
+height:400px; width:90%; max-width:1000px; min-width:400px;
+	margin:0 auto;
+	margin-right: auto;
+	margin-left: auto;
+}
+#s10 #hu{
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+}
+#menuAdmin{
+	height:40px; width:100%; max-width:1000px; min-width:500px;
+	margin:0 auto;
+	margin-right: auto;
+	margin-left: auto;
+}
+#menuAdmin #dentro{
+	width: 90%;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+#principal{
+	min-height:150px;
+}
+#divFooter{
+	height:200px; 
+	width:92%; 
+	max-width:1000px; 
+	min-width:400px;
+	margin:0 auto;
+	margin-right: auto;
+	margin-left: auto;
+
+
+}
+#footerDentro{
+	width: auto; max-width:1500px; min-width:983px;
+	margin-right: auto;
+	margin-left: auto;
+}
+.center.navbar .nav,
+	.center.navbar .nav > li {
+	    float:none;
+	    display:inline-block;
+	    *display:inline; /* ie7 fix */
+	    *zoom:1; /* hasLayout ie7 trigger */
+	    vertical-align: top;
+	}
+
+	.center .navbar-inner {
+	    text-align:center;
+	    height:auto; width:auto; max-width:975px; min-width:983px;
+	    margin:0 auto;
+		margin-right: auto;
+		margin-left: auto ;
+	}

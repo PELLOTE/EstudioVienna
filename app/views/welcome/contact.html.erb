@@ -1,0 +1,39 @@
+<div class="page-header">
+  <center><h2>Contactate con nosotros</h2></center>
+  <p>Envianos un mensaje con tu duda, sugerencia o reclamo. Esto nos ayudara a poder entregarte un mejor servicio.</p>
+
+</div>
+<%= form_tag  :action =>'enviarContacto'  do |f| %>
+
+<% if current_user%>
+    <div class="field">
+        <%= label_tag :nombre %>
+        <%= current_user.name.capitalize %> <%= current_user.lastname.capitalize %> <%= current_user.surname.capitalize %>
+    </div>
+    <div class="field">
+        <%= label_tag :email %>
+        <%= current_user.email %>
+    </div>
+<%else%>
+    <div class="field">
+        <%= label_tag :nombre %>
+        <%= text_field_tag :nombre %>
+    </div>
+    <div class="field">
+        <%= label_tag :email %>
+        <%= text_field_tag :email %>
+    </div>
+<%end%>
+<div class="field">
+    <%= label_tag :asunto %>
+    <%= text_field_tag :subject %>
+</div>
+  <div class="field">
+    <%= label_tag :mensaje %>
+    <%= text_area_tag :body,nil, :size => "207x10" %>
+</div>
+<div class="form-actions">
+    <%= button_tag "enviar", :class => 'btn-primary' %>
+</div> 
+<%end%> 
+

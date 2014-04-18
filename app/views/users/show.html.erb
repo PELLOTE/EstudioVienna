@@ -1,0 +1,21 @@
+<div class="page-header">
+  <center><h2><%= @user.name %> <%= @user.lastname %> <%= @user.surname %> </h2></center>
+</div> 	
+<div class="row">
+ <div class="span12">
+  <div class="row">
+    <div class="span5">
+   	<center>
+   		<img src="..." class="img-polaroid"></br>
+   		<h5>foto perfil</h5>
+   	</center>
+    </div>
+    <div class="span3">
+  	<strong>Correo Electronico:</strong> <%= @user.email %></br>	
+  	<strong>Telefono de contacto:</strong> <%= @user.fono %></br></br>
+  	<%= link_to " Atras", users_path,:class => 'active icon-arrow-left btn' %>  
+    </div>
+  </div>
+ </div>
+</div>
+

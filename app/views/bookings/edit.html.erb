@@ -1,0 +1,12 @@
+<% if current_user.user_type_id == 1 or current_user.id == @booking.user_id %>
+	<%- model_class = Booking -%>
+	<div class="page-header">
+	  <h2>Actualizar Solicitud</h2>
+	</div>
+	<%= render :partial => 'form' %>
+<% else %>
+	<% flash[:notice] = "No tiene permiso para actualizar esta reserva"%>
+	<div id='error_boton'>
+		<%= link_to " Volver a inicio", root_url,  :class => 'btn btn-primary' %>
+	</div>
+<% end %>

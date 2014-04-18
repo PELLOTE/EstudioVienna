@@ -1,0 +1,7 @@
+<p>
+  <b>Nombre de rol:</b>
+  <%= @user_type.name %>
+</p>
+
+<%= link_to ' Actualizar', edit_user_type_path(@user_type), :class => 'active icon-edit btn btn-primary ' %>
+<%= link_to ' Atras', user_types_path, :class => 'active icon-arrow-left btn '%>

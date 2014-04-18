@@ -1,0 +1,54 @@
+  <div class="page-header">
+  <center><h2>Crea tu cuenta en Estudio Vienna</h2></center>
+</div>
+<%= form_for @user, :html => { :class => 'form-horizontal' }, :validate => true  do |f| %>
+  <p class="text-error">Datos personales</p>
+  <div class="field">
+    <%= f.label :"Nombre" %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+      <%= f.label :"Apellidos" %>
+      <%= f.text_field :lastname%>      
+  </div>
+  <div class="field">
+      <%= f.label :"Telefono de contacto" %>
+      <%= f.text_field :fono %>
+  </div></br>
+  <p class="text-error">Datos de la cuenta</p>
+  <div class="field">
+    <%= f.label :"Correo Electronico" %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :"Contraseña" %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :"confirmación de contraseña" %>
+    <%= f.password_field :password_confirmation %>
+  </div></br>
+  <p class="text-error">Datos Opcionales</p>
+
+  <div class='field'>
+    <%= f.label :"Instrumento que toca" %>
+    <select name="user[instrument]">
+        <option value="bateria">
+          Guitarra
+        </option>
+        <option value="bateria">
+          Bateria
+        </option>
+        <option value="bajo">
+          Bajo
+        </option>
+        <option value="vocalista">
+          Vocalista
+        </option>
+    </select>
+  </div>
+
+</br>
+  <div class="actions"><%= f.button " Registrarme", :class => 'active icon-check btn btn-primary' %></div>
+
+<% end %>

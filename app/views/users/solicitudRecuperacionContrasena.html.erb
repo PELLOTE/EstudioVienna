@@ -1,0 +1,11 @@
+
+<%= form_tag  :action =>'enviarSolicitudRecuperacionContrasena'  do |f| %>
+<strong><p>¿Se te ha olvidado la contraseña de tu cuenta?, solo debes ingresar tu mail el cual te mandara los pasos a seguir.</p></strong>
+  <div class="field">
+    <%= label_tag :email %>
+    <%= text_field_tag :email %>
+  </div>
+  <div class="form-actions">
+    <%= button_tag " Enviar", :class => 'btn-primary' %>
+  </div> 
+<%end%> 

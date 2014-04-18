@@ -1,0 +1,36 @@
+<%- model_class = Room -%>
+<div class="page-header">
+  <center><h2>Listado de salas de ensayo</h2></center>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:"Numero") %></th>
+      <th><%= model_class.human_attribute_name(:"Precio por hora") %></th>
+      <th><%= model_class.human_attribute_name(:"Cantidad personas permitidas") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @rooms.each do |room| %>
+      <tr>
+        <td><%= link_to room.id, room_path(room) %></td>
+        <td><%= room.price %></td>
+        <td><%= room.max %></td>
+        <td>
+          <%= link_to ' Ver Detalles', room,:class => 'active icon-zoom-in btn btn-mini' %>
+          <%= link_to t('.edit', :default => t("helpers.links.actualizar")),
+                      edit_room_path(room), :class => 'active icon-edit btn btn-mini' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.eliminar")),
+                      room_path(room),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "¿Estas seguro que deseas eliminar la sala numero #{room.id}?")) },
+                      :class => 'active icon-trash btn btn-mini btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to t('.new', :default => t("helpers.links.Agregar nueva sala")),
+            new_room_path,
+            :class => 'btn btn-primary' %>

@@ -1,0 +1,21 @@
+<%= form_for @hora, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+  <div class="field">
+    <%= f.label :Nombre %>
+    <%= f.text_field :name %>
+    <p class="text-info"><%= f.label :"Indique la hora en que empieza y termina la hora, ejemplo: de 12:00 a 13:00 " %></P>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :"Hora de inicio" %>
+    <%= f.number_field :startTime %>
+  </div>
+  <br />
+  <div class="field">
+    <%= f.label :"Hora de termino" %>
+    <%= f.number_field :endTime %>
+  </div>
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'icon-ok-sign btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")), horas_path , :class => 'btn' %>
+  </div>
+<% end %>

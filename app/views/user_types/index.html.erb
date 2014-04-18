@@ -1,0 +1,26 @@
+<div class="page-header">
+  <center><h2>Listado de roles de usuario</h2></center>
+</div>
+
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Nombre de rol</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+</thead>
+
+<% @user_types.each do |user_type| %>
+  <tr>
+    <td><%= user_type.name %></td>
+    <td><%= link_to ' Ver Detalles', user_type,:class => 'active icon-zoom-in btn btn-mini' %>
+    <%= link_to ' Actualizar', edit_user_type_path(user_type),:class => 'active icon-edit btn btn-mini' %>
+    <%= link_to ' Eliminar', user_type, method: :delete, data: { confirm: "¿Estas seguro que deseas eliminar este rol de usuario?" },:class => 'active icon-trash btn btn-mini btn-danger'  %></td>
+  </tr>
+<% end %>
+</table>
+<br />
+
+<%= link_to ' Agregar rol', new_user_type_path, :class => 'active icon-plus-sign btn btn-primary' %>

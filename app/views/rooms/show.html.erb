@@ -1,0 +1,79 @@
+<%- model_class = Room -%>
+<div class="row">
+  <div class="span10">
+    <div class="page-header">
+      <center><h2><%=t "Sala de ensayo n° #{@room.id}" %></h2></center>
+    </div>
+    <div class="row">
+      <div class="span5">
+        <div class="hero-unit">
+          <center><h3><%= "Detalles de la sala" %></h3></br></center>
+        <table border="0">
+            <tr>
+              <td>Precio por hora :</td>
+              <td><%= @room.price %></td>               
+            </tr>
+
+            <tr>
+              <td>Cantidad personas permitidas :</td>
+              <td><%= @room.max %></td>              
+            </tr>
+            <tr>
+              <td>
+                </br></br>
+                <%= link_to t('.edit', :default => t(" actualizar")), edit_room_path(@room), :class => 'icon-edit btn' %>
+
+                <%= link_to t('.back', :default => t(" atras")), rooms_path, :class => ' icon-arrow-left btn'  %>
+              
+                <%= link_to t('.destroy', :default => t(" eliminar")), room_path(@room), :method => 'delete',
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "¿Estas seguro que deseas eliminar la sala numero #{@room.id}?")) },
+                      :class => 'active icon-trash btn btn-danger' %>
+              </td>            
+            </tr>          
+        </table>
+        </div>       
+      </div> <!-- end span6 -->
+      <div class="span5">
+        <div class="hero-unit">
+          <center><h3><%= "Equipos Asignados" %></h3></br></center>
+          <table>
+            <% if @equipment.count != 0 %> 
+            <tr>
+              <th>Equipo</th>
+              <th>Marca</th>
+              <th>Cantidad</th>
+            </tr>
+
+            <%else%>
+              No hay equipos asignados a esta sala
+            <%end%>
+           
+            <% @equipment.each do |e| %>
+            <tr>
+              <td><%= link_to e.tool, room_equipment_path(@room, e.id) %></td>
+              <td><%= e.trademark %></td>
+              <td><%= e.quantity %></td>
+              <td><%= link_to t('.edit', :default => t(" actualizar")),
+                      edit_room_equipment_path(@room.id,e), :class => 'icon-edit btn btn-mini' %>
+              </td>
+              <td>
+              <%= link_to t('.destroy', :default => t(" eliminar")),
+                      room_equipment_path(@room.id,e),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => "¿Estas seguro que deseas eliminar #{e.tool} #{e.trademark} ?")) },
+                      :class => ' active icon-trash btn btn-mini btn-danger' %>
+              </td>
+            </tr>
+            <%end%>
+          </table>
+          </br>
+          <%= link_to ' Agregar Equipamiento', new_room_equipment_path(@room.id), :class => "icon-plus-sign btn " %>
+        </div>  
+      </div> <!-- end span6 -->
+    </div><!-- end row -->
+  </div>
+</div>
+
+
+
+

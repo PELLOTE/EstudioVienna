@@ -1,0 +1,25 @@
+<%= form_for @user, :html => { :class => 'form-horizontal' }, :validate => true do |f| %> 
+ <div class="field">
+    <%= f.label :nombre %>
+    <%= f.text_field :name %>
+</div>
+<div class="field">
+    <%= f.label :apellido_paterno %>
+    <%= f.text_field :lastname %>
+</div>
+<div class="field">
+    <%= f.label :apellido_materno %>
+    <%= f.text_field :surname %>
+</div>
+<div class="field">
+    <%= f.label :instrumento %>
+    <%= f.text_field :instrument %>
+</div>
+<div class="field">
+    <%= f.label :fono %>
+    <%= f.text_field :fono %>
+</div>
+<div class="form-actions">
+    <%= f.button "Editar Perfil", :class => 'btn-primary' %>
+</div> 
+<% end %>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Hola! <%= @user.name %> <%= @user.lastname %></h1>
+    <p> Haz realizado una reserva en Estudio Vienna. Reserva: Sala N°<%= @booking.room_id %>, para el día   <%= @booking.fecha.day %>/<%= @booking.fecha.month %>/<%= @booking.fecha.year %>.</p>
+     <ul>
+
+          <% hora = Booking.includes(:horas).find(@booking.id)%>
+            <%hora.horas.each do |horas|%>
+                <li><%= horas.name %> horas</li>
+            <%end%> 
+     </ul> 
+     <p>Recuerda que tienes que confirmar con 2 días de anticipación o tu reserva será anulada.</p>
+
+    <p>Para confirmar debes acercarte a Estudio Vienna, en Maipú 975, Concepción y pagar la mitad o el total de las horas reservadas.</p> 
+    <p>Gracias por preferir Estudio Vienna!</p>
+  </body>
+</html>

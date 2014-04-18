@@ -1,0 +1,23 @@
+<div class="page-header">
+  <center><h2>Listado de articulos publicados</h2></center>
+</div>
+
+<ul class='thumbnails' id='articles'>
+  <% @articles.each do |article| %>
+    <div id='article'>
+      <li class='span2'>
+        <div class='thumbnail'>
+          <% if article.has_photo? %>
+            <%= image_tag article.photo_path%>
+          <% end %>
+          <div>
+            <h4><%= link_to article.title, article %></h4>
+          </div>
+        </div>  
+      </li>
+    </div>
+  <% end %>  
+</ul>
+<br />
+
+<%= link_to ' Agregar nuevo articulo', new_article_path, :class => 'icon-plus-sign btn btn-primary'  %>

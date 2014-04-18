@@ -1,0 +1,13 @@
+Acerca de Nosotros
+
+<p id="markers_list"></p>
+
+<%= gmaps("markers" => {"data" => @json, "options" => {"list_container" => "markers_list" } }) %>
+
+<% if current_user %>
+	<% if current_user.user_type_id == 1%>
+		<% @characters.each do |character| %>
+  			<%= link_to 'Editar Localizacion', edit_character_path(character) %>  
+		<% end %>
+	<% end %>
+<% end %>

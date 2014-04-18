@@ -1,0 +1,12 @@
+<%= form_for @music_style, :validate => true do |f| %>
+  <div class="field">
+    <%= f.label :"nombre estilo musical" %>
+    <%= f.text_field :name %>
+    <p class="text-info"><%= f.label :" " %></P>
+  </div>
+  </br>
+  <div class="form-actions">
+    <%= f.button @boton, :class => 'active  icon-ok-sign btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancelar")), music_styles_path , :class => 'btn' %>
+  </div>
+<% end %>

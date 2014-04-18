@@ -1,0 +1,17 @@
+<%= form_for @room, :html => { :class => 'form-horizontal' }, :validate => true do |f| %>
+<div class="control-group">
+  	<%= f.label :"Precio por hora", :class => 'control-label' %>
+ 	<div class="controls">
+		 <%= f.number_field :price, :class => 'number_field' %>
+ 	</div>
+	</br>
+ 	 <%= f.label :"Cantidad maxima permitida", :class => 'control-label' %>
+ 	<div class="controls">
+		 <%= f.number_field :max, :class => 'number_field' %>
+	 	</div>
+</div>
+<div class="form-actions">
+	<%= f.button @boton, :class => 'active icon-ok-sign btn-primary' %>
+	<%= link_to t('.cancel', :default => t("helpers.links.cancelar")), rooms_path, :class => 'btn' %>
+</div>
+<% end %>

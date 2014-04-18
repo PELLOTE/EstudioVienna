@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>hola! <%= @user.name %> <%= @user.lastname %></h1>
+    <p> Se ha confirmado una reserva en Estudio Vienna en la sala n°<%= @booking.room_id %>
+    	para la fecha <%= @booking.fecha.day %>/<%= @booking.fecha.month %>/<%= @booking.fecha.year %>.</br>
+    	El monto con el cual se confirmo es de: $<%=@booking.amount%>.</p>
+      <p>Gracias por preferir Estudio Vienna!</p>
+  </body>
+</html>
